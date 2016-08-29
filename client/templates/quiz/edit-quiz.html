@@ -1,0 +1,17 @@
+<template name="editQuiz">
+  {{#if ready}}
+  {{#each q in questions}}
+    <div class="row">
+      <div class="twelve columns">{{q.category}}</div>
+      <div class="twelve columns">{{q.question}}</div>
+      {{#each a in q.answers}}
+        <div class="six columns">
+          {{a.answer}}
+        </div>
+      {{/each}}
+    </div>
+  {{/each}}
+  {{else}}
+    {{> loading}}
+  {{/if}}
+</template>

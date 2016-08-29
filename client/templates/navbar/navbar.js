@@ -1,0 +1,3 @@
+Template.navbar.onCreated(function() {
+
+});

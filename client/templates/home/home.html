@@ -1,0 +1,13 @@
+<template name='home'>
+    <div class='container'>
+    {{#if appReady}}
+    <div class="row">
+        <form class='col-md-12'>
+            <input class="btn btn-primary js-submit" type="submit" value="Start Lobby">
+        </form>
+    </div>
+    {{else}}
+        {{> loading}}
+    {{/if}}
+    </div>
+</template>
