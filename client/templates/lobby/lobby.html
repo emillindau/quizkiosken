@@ -68,6 +68,9 @@
             </div>
           </div>
         {{/if}}
+        {{#each player in players}}
+          {{player.username}}
+        {{/each}}
       {{/with}}
     {{else}}
       <div class='row'>

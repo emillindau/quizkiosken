@@ -69,6 +69,7 @@ Template.started.onCreated(function() {
   }
 
   template.autorun(() => {
+    template.subscribe('userLobbyData', lobby._id); 
     const handle = template.subscribe('Questions.lobby', lobby._id);
     if(handle.ready()) {
       const question = Questions.findOne({lobbyId: lobby._id});
@@ -99,6 +100,10 @@ Template.started.helpers({
   correctAnswer: function() {
     const question = Questions.findOne({lobbyId: Router.current().params._id});
     return question.visibleAnswer;
+  },
+  players: function() {
+    const players = Meteor.users.find({lobby: Router.current().params._id});
+    return players;
   }
 });
 

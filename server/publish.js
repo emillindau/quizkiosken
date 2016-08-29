@@ -17,6 +17,13 @@ Meteor.publish('Questions.lobby', function(lobbyId) {
   }});
 });
 
+Meteor.publish("userLobbyData", function (lobbyId) {
+  return Meteor.users.find({lobby: lobbyId}, {fields: {
+    'username': 1,
+    'lobby': 1,
+  }});
+});
+
 Meteor.publish('Lobby', function(id) {
   return Lobbies.find({_id: id});
 });
