@@ -28,7 +28,7 @@ Template.home.helpers({
 Template.home.events({
   'click .js-submit': (event) => {
     event.preventDefault();
-    Meteor.call('createLobby', Session.get('clientId'), (err, res) => {
+    Meteor.call('createLobby', Meteor.userId(), (err, res) => {
       console.log('lobby created', res);
       Router.go('/lobby/'+res);
     });

@@ -5,18 +5,20 @@ Template.lobby.onCreated(function() {
     if(handle.ready()) {
       console.log('ready');
       const lobby = Lobbies.findOne({_id: Router.current().params._id});
-      const clientId = Session.get('clientId');
+      const clientId = Meteor.userId(); // Session.get('clientId');
 
-      if(lobby.clients && lobby.clients.includes(clientId)) {
-        console.log('client already present in lobby');
-      } else {
-        console.log('need to add client to lobby');
-        if(!lobby.started) {
-          Meteor.call('addClientToLobby', clientId, Router.current().params._id, (err, res) => {
-            console.log('client added');
-          });
+      if(clientId) {
+        if(lobby.clients && lobby.clients.includes(clientId)) {
+          console.log('client already present in lobby');
         } else {
-          console.log('lobby already started');
+          console.log('need to add client to lobby');
+          if(!lobby.started) {
+            Meteor.call('addClientToLobby', clientId, Router.current().params._id, (err, res) => {
+              console.log('client added');
+            });
+          } else {
+            console.log('lobby already started');
+          }
         }
       }
     }
@@ -29,7 +31,7 @@ Template.lobby.helpers({
   },
   isAdmin: function() {
       const lobby = Lobbies.findOne({_id: Router.current().params._id});
-      const clientId = Session.get('clientId');
+      const clientId = Meteor.userId(); // Session.get('clientId');
       return lobby.adminId === clientId;
   },
   isStarted: function() {
@@ -52,7 +54,7 @@ Template.lobby.events({
 Template.started.onCreated(function() {
   const template = this;
   const lobby = Lobbies.findOne({_id: Router.current().params._id});
-  const clientId = Session.get('clientId');
+  const clientId = Meteor.userId();
   if(lobby.clients && lobby.clients.includes(clientId)) {
     console.log('You will participate in quiz!');
     if(clientId === lobby.adminId) {
@@ -88,7 +90,7 @@ Template.started.onCreated(function() {
 Template.started.helpers({
   isActivePlayer: function() {
     const lobby = Lobbies.findOne({_id: Router.current().params._id});
-    return lobby.clients && lobby.clients.includes(Session.get('clientId'));
+    return lobby.clients && lobby.clients.includes(Meteor.userId());
   },
   current: function() {
     console.log(Questions.findOne({lobbyId: Router.current().params._id}));
@@ -106,7 +108,7 @@ Template.started.events({
     console.log('submit');
     const answer = $('#answer').val().trim();
     console.log('answer', answer);
-    Meteor.call('checkAnswer', Session.get('clientId'), Router.current().params._id, answer, (err, res) => {
+    Meteor.call('checkAnswer', Meteor.userId(), Router.current().params._id, answer, (err, res) => {
       if(res) {
         if(res.data) {
           console.log('correct ANSWER!!!');
