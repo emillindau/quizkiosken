@@ -69,12 +69,12 @@ Template.started.onCreated(function() {
   }
 
   template.autorun(() => {
-    template.subscribe('userLobbyData', lobby._id); 
+    template.subscribe('userLobbyData', lobby._id);
     const handle = template.subscribe('Questions.lobby', lobby._id);
     if(handle.ready()) {
       const question = Questions.findOne({lobbyId: lobby._id});
       if(clientId === lobby.adminId) {
-        if(question.correctAnswer) { // correctAnswer = id of user with correct answer
+        if(question && question.correctAnswer) { // correctAnswer = id of user with correct answer
           Meteor.setTimeout(() => {
             Meteor.call('nextQuestion', clientId, lobby._id, (err, res) => {
               console.log('new question loaded');

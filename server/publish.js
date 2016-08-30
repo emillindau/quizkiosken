@@ -17,6 +17,10 @@ Meteor.publish('Questions.lobby', function(lobbyId) {
   }});
 });
 
+Meteor.publish('Messages.lobby', function(lobbyId) {
+  return Messages.find({lobby: lobbyId}, {limit: 10, sort: {created: -1}});
+});
+
 Meteor.publish("userLobbyData", function (lobbyId) {
   return Meteor.users.find({lobby: lobbyId}, {fields: {
     'username': 1,

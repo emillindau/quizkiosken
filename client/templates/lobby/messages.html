@@ -1,0 +1,13 @@
+<template name='messages'>
+  {{#if messages}}
+    <div class='container'>
+      {{#each message in messages}}
+        <div class='row'>
+          <div class='col-md-12'>
+            <p>{{message.from}} {{message.created}} - {{message.value}}</p>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  {{/if}}
+</template>
