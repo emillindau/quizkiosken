@@ -2,6 +2,7 @@ Template.lobby.onCreated(function() {
   const template = this;
   template.autorun(function() {
     const handle = template.subscribe('Lobby', Router.current().params._id);
+    template.subscribe('userLobbyData', Router.current().params._id);
     if(handle.ready()) {
       console.log('ready');
       const lobby = Lobbies.findOne({_id: Router.current().params._id});
@@ -36,6 +37,10 @@ Template.lobby.helpers({
   },
   isStarted: function() {
     return Lobbies.findOne({_id: Router.current().params._id}).started;
+  },
+  players: function() {
+    const players = Meteor.users.find({lobby: Router.current().params._id});
+    return players;
   }
 });
 
@@ -69,7 +74,6 @@ Template.started.onCreated(function() {
   }
 
   template.autorun(() => {
-    template.subscribe('userLobbyData', lobby._id);
     const handle = template.subscribe('Questions.lobby', lobby._id);
     if(handle.ready()) {
       const question = Questions.findOne({lobbyId: lobby._id});
