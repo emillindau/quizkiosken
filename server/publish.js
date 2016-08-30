@@ -25,6 +25,7 @@ Meteor.publish("userLobbyData", function (lobbyId) {
   return Meteor.users.find({lobby: lobbyId}, {fields: {
     'username': 1,
     'lobby': 1,
+    'currentLobbyValue': 1,
   }});
 });
 

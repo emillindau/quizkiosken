@@ -64,7 +64,7 @@ Template.started.onCreated(function() {
     console.log('You will participate in quiz!');
     if(clientId === lobby.adminId) {
       console.log('You are admin and will start!');
-      Meteor.call('nextQuestion', clientId, lobby._id, (err, res) => {
+      Meteor.call('startQuizInLobby', lobby._id, (err, res) => {
         console.log(err);
         console.log(res);
       });
@@ -77,14 +77,9 @@ Template.started.onCreated(function() {
     const handle = template.subscribe('Questions.lobby', lobby._id);
     if(handle.ready()) {
       const question = Questions.findOne({lobbyId: lobby._id});
-      if(clientId === lobby.adminId) {
+      if(clientId) {
         if(question && question.correctAnswer) { // correctAnswer = id of user with correct answer
-          Meteor.setTimeout(() => {
-            Meteor.call('nextQuestion', clientId, lobby._id, (err, res) => {
-              console.log('new question loaded');
-              $('body').css('background', '#FFFFFF');
-            });
-          }, 5000);
+          console.log('new question loaded');
         }
       }
       console.log('started handle ready');
@@ -108,7 +103,7 @@ Template.started.helpers({
   players: function() {
     const players = Meteor.users.find({lobby: Router.current().params._id});
     return players;
-  }
+  },
 });
 
 Template.started.events({
@@ -121,10 +116,14 @@ Template.started.events({
       if(res) {
         if(res.data) {
           console.log('correct ANSWER!!!');
-          $('body').css('background', '#2ECC40');
+          // $('body').css('background', '#2ECC40');
         } else {
+          $('body').addClass('flash');
+          setTimeout(function() {
+            $('body').removeClass('flash');
+          }, 700);
           console.log('not correct answer :(');
-          $('body').css('background', '#FF4136');
+          // $('body').css('background', '#FF4136');
         }
       }
       $('#answer').val('');// = '';

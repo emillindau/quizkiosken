@@ -69,9 +69,16 @@
             </div>
           </div>
         {{/if}}
+        <div class='row'>
         {{#each player in players}}
-          {{player.username}}
+          <div class='col-md-6'>
+            {{player.username}}
+          </div>
+          <div class='col-md-6'>
+            {{player.currentLobbyValue}} $
+          </div>
         {{/each}}
+        </div>
       {{/with}}
     {{else}}
       <div class='row'>
