@@ -26,6 +26,13 @@ Template.lobby.onCreated(function() {
   });
 });
 
+Template.lobby.onDestroyed(function() {
+  // Need to tell the server that we quit
+  Meteor.call('removeClientFromLobby', clientId, Router.current().params._id, (err, res) => {
+    // Handle silently
+  });
+});
+
 Template.lobby.helpers({
   lobby: function() {
       return Lobbies.findOne({_id: Router.current().params._id});
@@ -47,7 +54,7 @@ Template.lobby.helpers({
 Template.lobby.events({
   'click .js-start': function(event, template) {
     event.preventDefault();
-    Meteor.call('startQuiz', Router.current().params._id, (err, res) => {
+    Meteor.call('startQuiz', Router.current().params._id, 20, (err, res) => {
       if(!err) {
         console.log(res);
       }
@@ -101,7 +108,7 @@ Template.started.helpers({
     return question.visibleAnswer;
   },
   players: function() {
-    const players = Meteor.users.find({lobby: Router.current().params._id});
+    const players = Meteor.users.find({lobby: Router.current().params._id}, {sort: {currentLobbyValue: -1}});
     return players;
   },
 });

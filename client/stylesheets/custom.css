@@ -26,3 +26,7 @@
     50% { background-color: #FF4136; }
     100% { background-color: none; }
 }
+
+.bold {
+  font-weight: bold;
+}
