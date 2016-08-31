@@ -43,8 +43,16 @@
 </template>
 
 <template name='started'>
+  {{#if isAdmin}}
   <div class='container'>
-
+    <div class='row'>
+      <div class='col-md-12'>
+        <input class="btn btn-danger js-stop" type="submit" value="Stop Quiz">
+      </div>
+    </div>
+  </div>
+  {{/if}}
+  <div class='container'>
     {{#if isActivePlayer}}
       {{#with current}}
         <div class='row'>

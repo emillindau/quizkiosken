@@ -8,7 +8,7 @@ Template.lobby.onCreated(function() {
       const lobby = Lobbies.findOne({_id: Router.current().params._id});
       const clientId = Meteor.userId(); // Session.get('clientId');
 
-      if(clientId) {
+      if(clientId && lobby) {
         if(lobby.clients && lobby.clients.includes(clientId)) {
           console.log('client already present in lobby');
         } else {
@@ -28,7 +28,7 @@ Template.lobby.onCreated(function() {
 
 Template.lobby.onDestroyed(function() {
   // Need to tell the server that we quit
-  Meteor.call('removeClientFromLobby', clientId, Router.current().params._id, (err, res) => {
+  Meteor.call('removeClientFromLobby', Meteor.userId(), Router.current().params._id, (err, res) => {
     // Handle silently
   });
 });
@@ -111,6 +111,11 @@ Template.started.helpers({
     const players = Meteor.users.find({lobby: Router.current().params._id}, {sort: {currentLobbyValue: -1}});
     return players;
   },
+  isAdmin: function() {
+      const lobby = Lobbies.findOne({_id: Router.current().params._id});
+      const clientId = Meteor.userId(); // Session.get('clientId');
+      return lobby.adminId === clientId;
+  }
 });
 
 Template.started.events({
@@ -136,5 +141,11 @@ Template.started.events({
       $('#answer').val('');// = '';
       $('#answer').select();
     });
-  }
+  },
+  'click .js-stop': function(event) {
+    console.log('stopping quiz');
+    Meteor.call('stopQuiz', Meteor.userId(), Router.current().params._id, (err, res) => {
+
+    });
+  },
 });
