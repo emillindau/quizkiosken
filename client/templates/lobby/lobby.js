@@ -2,7 +2,6 @@ Template.lobby.onCreated(function() {
   const template = this;
   template.autorun(function() {
     const handle = template.subscribe('Lobby', Router.current().params._id);
-    template.subscribe('userLobbyData', Router.current().params._id);
     if(handle.ready()) {
       console.log('ready');
       const lobby = Lobbies.findOne({_id: Router.current().params._id});
@@ -44,10 +43,6 @@ Template.lobby.helpers({
   },
   isStarted: function() {
     return Lobbies.findOne({_id: Router.current().params._id}).started;
-  },
-  players: function() {
-    const players = Meteor.users.find({lobby: Router.current().params._id});
-    return players;
   }
 });
 
@@ -83,12 +78,6 @@ Template.started.onCreated(function() {
   template.autorun(() => {
     const handle = template.subscribe('Questions.lobby', lobby._id);
     if(handle.ready()) {
-      const question = Questions.findOne({lobbyId: lobby._id});
-      if(clientId) {
-        if(question && question.correctAnswer) { // correctAnswer = id of user with correct answer
-          console.log('new question loaded');
-        }
-      }
       console.log('started handle ready');
     }
   })
@@ -130,9 +119,9 @@ Template.started.events({
           console.log('correct ANSWER!!!');
           // $('body').css('background', '#2ECC40');
         } else {
-          $('body').addClass('flash');
+          $('.answer-form').addClass('flash');
           setTimeout(function() {
-            $('body').removeClass('flash');
+            $('.answer-form').removeClass('flash');
           }, 700);
           console.log('not correct answer :(');
           // $('body').css('background', '#FF4136');

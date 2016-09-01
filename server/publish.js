@@ -26,6 +26,7 @@ Meteor.publish("userLobbyData", function (lobbyId) {
     'username': 1,
     'lobby': 1,
     'currentLobbyValue': 1,
+    'avatar': 1,
   }});
 });
 
