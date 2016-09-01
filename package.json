@@ -9,6 +9,7 @@
     "gravatar": "^1.5.2",
     "meteor-node-stubs": "~0.2.0",
     "moment": "^2.14.1",
-    "string_score": "^0.1.22"
+    "string_score": "^0.1.22",
+    "striptags": "^2.1.1"
   }
 }
