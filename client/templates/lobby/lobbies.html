@@ -1,0 +1,13 @@
+<template name='lobbies'>
+  <div class='container'>
+    <div class='row'>
+      <div class='col-md-12'>
+        <ul>
+          {{#each lobby in lbs}}
+            <li><a href='/lobby/{{lobby._id}}'>{{lobby.name}}</a></li>
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+  </div>
+</template>

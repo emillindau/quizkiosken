@@ -83,6 +83,10 @@ Template.started.onCreated(function() {
   })
 });
 
+Template.started.onRendered(function() {
+  $('#answer').select();
+});
+
 Template.started.helpers({
   isActivePlayer: function() {
     const lobby = Lobbies.findOne({_id: Router.current().params._id});

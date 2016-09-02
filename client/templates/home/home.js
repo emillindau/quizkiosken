@@ -28,7 +28,11 @@ Template.home.helpers({
 Template.home.events({
   'click .js-submit': (event) => {
     event.preventDefault();
-    Meteor.call('createLobby', Meteor.userId(), (err, res) => {
+    const noOfQuestions = $('#noq').val();
+    const quizSource = $('#qs').val();
+    const name = $('#inputName').val();
+
+    Meteor.call('createLobby', Meteor.userId(), name, noOfQuestions, quizSource, (err, res) => {
       console.log('lobby created', res);
       Router.go('/lobby/'+res);
     });
