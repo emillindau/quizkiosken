@@ -8,7 +8,7 @@ Template.questionForm.events({
 
     const question = $('#inputQuestion').val().trim();
     const category = $('#inputCategory').val().trim();
-    const val = $('#inputValue').val().trim();
+    const val = parseInt($('#inputValue').val().trim());
     const answer = $('#inputAnswer').val().trim();
 
     Meteor.call('addQuestion', question, category, val, answer, (err, res) => {
