@@ -5,12 +5,27 @@
   {{else}}
     {{#if currentUser}}
       <div class='container'>
-      <div class='row'>
-          <div class='col-md-12'><h1>Välkommen till lobby</h1></div>
-          {{#if isAdmin}}
-            <div class='col-md-12'><input class="btn btn-primary js-start" type="submit" value="Start Quiz"></div>
-          {{/if}}
+        <div class='row'>
+            <div class='col-md-12'><h1>Välkommen till lobby</h1></div>
         </div>
+        {{#if isAdmin}}
+          <div class='row'>
+            <div class='col-md-6'><input class="btn btn-primary js-start" type="submit" value="Start Quiz"></div>
+            <div class='col-md-6'><input class='btn btn-default js-allow-team' type='button' value='Allow teams'></div>
+          </div>
+        {{/if}}
+        
+        {{#if allowTeams}}
+          <div class='row'> 
+            <div class='col-md-6'> <!-- team red -->
+              Join team red
+            </div>
+            <div class='col-md-6'> <!-- team blue -->
+              Join team blue
+            </div>
+          </div>
+        {{/if}}
+
         {{> users }}
       </div>
     {{else}}

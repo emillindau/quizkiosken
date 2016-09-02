@@ -7,8 +7,6 @@ Template.users.onCreated(function() {
 
 Template.users.helpers({
   players: function() {
-    const players = Meteor.users.find({lobby: Router.current().params._id});
-    console.log(players.fetch());
-    return players;
+    return Meteor.users.find({lobby: Router.current().params._id}, {sort: {'currentLobbyValue': -1}});
   },
 });

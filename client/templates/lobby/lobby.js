@@ -5,7 +5,7 @@ Template.lobby.onCreated(function() {
     if(handle.ready()) {
       console.log('ready');
       const lobby = Lobbies.findOne({_id: Router.current().params._id});
-      const clientId = Meteor.userId(); // Session.get('clientId');
+      const clientId = Meteor.userId();
 
       if(clientId && lobby) {
         if(lobby.clients && lobby.clients.includes(clientId)) {
@@ -23,6 +23,7 @@ Template.lobby.onCreated(function() {
       }
     }
   });
+  Session.setDefault('allowTeams', false);
 });
 
 Template.lobby.onDestroyed(function() {
@@ -38,11 +39,14 @@ Template.lobby.helpers({
   },
   isAdmin: function() {
       const lobby = Lobbies.findOne({_id: Router.current().params._id});
-      const clientId = Meteor.userId(); // Session.get('clientId');
+      const clientId = Meteor.userId();
       return lobby.adminId === clientId;
   },
   isStarted: function() {
     return Lobbies.findOne({_id: Router.current().params._id}).started;
+  },
+  allowTeams: function() {
+    return Session.get('allowTeams');
   }
 });
 
@@ -55,6 +59,10 @@ Template.lobby.events({
       }
     });
   },
+  'click .js-allow-team': function(event, template) {
+    event.preventDefault();
+    Session.set('allowTeams', !Session.get('allowTeams'));
+  }
 });
 
 /** START OF STARTED TEMPLATE **/
