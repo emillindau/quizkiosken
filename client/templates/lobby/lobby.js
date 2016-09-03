@@ -23,7 +23,6 @@ Template.lobby.onCreated(function() {
       }
     }
   });
-  Session.setDefault('allowTeams', false);
 });
 
 Template.lobby.onDestroyed(function() {
@@ -46,7 +45,7 @@ Template.lobby.helpers({
     return Lobbies.findOne({_id: Router.current().params._id}).started;
   },
   allowTeams: function() {
-    return Session.get('allowTeams');
+    return Lobbies.findOne({_id: Router.current().params._id}).allowTeams;
   }
 });
 
@@ -61,9 +60,25 @@ Template.lobby.events({
   },
   'click .js-allow-team': function(event, template) {
     event.preventDefault();
-    Session.set('allowTeams', !Session.get('allowTeams'));
-  }
+    Meteor.call('allowTeams', Router.current().params._id, !Lobbies.findOne({_id: Router.current().params._id}).allowTeams, (err, res) => {
+      // Handle silent
+    });
+  },
+  'click .js-join-red': function(event, template) {
+    event.preventDefault();
+    _joinTeam('red', Router.current().params._id, Meteor.userId());
+  },
+  'click .js-join-blue': function(event, template) {
+    event.preventDefault();
+    _joinTeam('blue', Router.current().params._id, Meteor.userId());
+  },
 });
+
+const _joinTeam = (team, lobbyId, clientId) => {
+  Meteor.call('joinTeam', team, lobbyId, clientId, (err, res) => {
+    // Handle silent
+  });
+}
 
 /** START OF STARTED TEMPLATE **/
 Template.started.onCreated(function() {
