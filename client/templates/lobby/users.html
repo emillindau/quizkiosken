@@ -1,18 +1,20 @@
 <template name='users'>
-    {{#each player in players}}
+
+  {{#each player in players}}
     <div class="row">
-          <div class="profile-header-container">
-          <div class="profile-header-img">
-                  <img class="img-circle" src="{{player.avatar}}" />
-                  <!-- badge -->
-                  <div class="rank-label-container">
-                      <span class="label label-default rank-label">{{player.username}}</span>
-                  </div>
-                  <span class='value-user'>
-                    {{player.currentLobbyValue}} $
-                  </span>
-              </div>
+      <div class="profile-header-container">
+        <div class="profile-header-img">
+          <img class="img-circle" src="{{player.avatar}}" />
+          <!-- badge -->
+          <div class="rank-label-container">
+              <span class="label label-default rank-label">{{player.username}}</span>
           </div>
+          <span class='value-user'>
+            {{player.currentLobbyValue}} $
+          </span>
+        </div>
+      </div>
     </div>
-    {{/each}}
+  {{/each}}
+
 </template>
