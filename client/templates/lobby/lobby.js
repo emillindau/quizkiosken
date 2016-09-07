@@ -1,10 +1,12 @@
 Template.lobby.onCreated(function() {
   const template = this;
+  const lobbyId = Router.current().params._id;
   template.autorun(function() {
-    const handle = template.subscribe('Lobby', Router.current().params._id);
+    const handle = template.subscribe('Lobby', lobbyId);
+    template.subscribe('Teams.lobby', lobbyId);
     if(handle.ready()) {
       console.log('ready');
-      const lobby = Lobbies.findOne({_id: Router.current().params._id});
+      const lobby = Lobbies.findOne({_id: lobbyId});
       const clientId = Meteor.userId();
 
       if(clientId && lobby) {
@@ -12,10 +14,13 @@ Template.lobby.onCreated(function() {
           console.log('client already present in lobby');
         } else {
           console.log('need to add client to lobby');
+          // Add client even though server started..
+          Meteor.call('addClientToLobby', clientId, lobbyId, (err, res) => {
+            console.log('client added');
+          });
+
           if(!lobby.started) {
-            Meteor.call('addClientToLobby', clientId, Router.current().params._id, (err, res) => {
-              console.log('client added');
-            });
+            console.log('lobby has not started');
           } else {
             console.log('lobby already started');
           }
@@ -46,7 +51,7 @@ Template.lobby.helpers({
   },
   allowTeams: function() {
     return Lobbies.findOne({_id: Router.current().params._id}).allowTeams;
-  }
+  },
 });
 
 Template.lobby.events({
@@ -71,6 +76,15 @@ Template.lobby.events({
   'click .js-join-blue': function(event, template) {
     event.preventDefault();
     _joinTeam('blue', Router.current().params._id, Meteor.userId());
+  },
+  'click .js-delete-lobby': function(event, template) {
+    event.preventDefault();
+    Meteor.call('deleteLobby', Router.current().params._id, Meteor.userId(), (err, res) => {
+      // Handle silent
+      if(res) {
+        Router.go('/');
+      }
+    });
   },
 });
 

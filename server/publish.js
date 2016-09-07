@@ -6,6 +6,10 @@ Meteor.publish('Lobbies.notStarted', function() {
   return Lobbies.find({started: {$ne: true}});
 });
 
+Meteor.publish('Teams.lobby', function(lobbyId) {
+  return Teams.find({lobby: lobbyId});
+});
+
 Meteor.publish('Questions.lobby', function(lobbyId) {
   return Questions.find({lobbyId: lobbyId}, {fields: {
     _id: 1,

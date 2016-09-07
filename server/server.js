@@ -8,7 +8,6 @@ Accounts.onCreateUser(function(options, user) {
   const email = user.emails[0].address;
   const url = gravatar.url(email, {s: '200', protocol: 'http', d: 'retro', r: 'pg'});
   user.avatar = url;
-  console.log('user', user);
 
   return user;
 });

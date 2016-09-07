@@ -10,13 +10,14 @@
         </div>
         {{#if isAdmin}}
           <div class='row'>
-            <div class='col-md-6'><input class="btn btn-primary js-start" type="submit" value="Start Quiz"></div>
-            <div class='col-md-6'><input class='btn btn-default js-allow-team' type='button' value='Allow teams'></div>
+            <div class='col-md-4'><input class="btn btn-primary js-start" type="submit" value="Start Quiz"></div>
+            <div class='col-md-4'><input class='btn btn-default js-allow-team' type='button' value='Allow teams'></div>
+            <div class='col-md-4'><input class='btn btn-danger js-delete-lobby' type='button' value='Delete lobby'></div>
           </div>
         {{/if}}
-        
+
         {{#if allowTeams}}
-          <div class='row'> 
+          <div class='row'>
             <div class='col-md-6'> <!-- team red -->
               <input class='btn btn-danger js-join-red' type='button' value='Join red team'>
             </div>
