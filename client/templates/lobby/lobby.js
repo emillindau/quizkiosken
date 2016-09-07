@@ -32,6 +32,7 @@ Template.lobby.onCreated(function() {
 
 Template.lobby.onDestroyed(function() {
   // Need to tell the server that we quit
+  console.log('Removing client from user');
   Meteor.call('removeClientFromLobby', Meteor.userId(), Router.current().params._id, (err, res) => {
     // Handle silently
   });
