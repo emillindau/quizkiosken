@@ -1,9 +1,11 @@
 Template.lobby.onCreated(function() {
   const template = this;
   const lobbyId = Router.current().params._id;
+
   template.autorun(function() {
     const handle = template.subscribe('Lobby', lobbyId);
     template.subscribe('Teams.lobby', lobbyId);
+
     if(handle.ready()) {
       console.log('ready');
       const lobby = Lobbies.findOne({_id: lobbyId});
