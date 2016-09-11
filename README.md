@@ -23,3 +23,4 @@
 
 ## done aka next release
 * Give adminrole to players when a. admin leaves, b. user enters empty lobby
+* Clues now works with spaces
