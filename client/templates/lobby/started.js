@@ -45,8 +45,28 @@ Template.started.helpers({
 
     return q;
   },
+  isMusic: function() {
+    const question = Questions.findOne({lobbyId: Router.current().params._id});
+    return question.isMusic;
+  },
+  play: function() {
+    const question = Questions.findOne({lobbyId: Router.current().params._id});
+    if(question && !question.visibleAnswer) {
+      console.log('trying to play audio');
+      _stop();
+      Template.started.audio = new Audio(question.url);
+      Template.started.audio.play();
+    }
+  },
+  stop: function() {
+    _stop();
+  },
   correctAnswer: function() {
     const question = Questions.findOne({lobbyId: Router.current().params._id});
+    console.log('question from visible', question);
+    if(question.visibleAnswer) {
+      _stop();
+    }
     return question.visibleAnswer;
   },
   players: function() {
@@ -59,6 +79,13 @@ Template.started.helpers({
       return lobby.adminId === clientId;
   }
 });
+
+Template.started.audio;
+const _stop = function() {
+  if(Template.started.audio) {
+    Template.started.audio.pause();
+  }
+}
 
 Template.started.events({
   'submit #answerForm': function(event) {
@@ -84,6 +111,7 @@ Template.started.events({
   },
   'click .js-stop': function(event) {
     console.log('stopping quiz');
+    _stop();
     Meteor.call('stopQuiz', Meteor.userId(), Router.current().params._id, (err, res) => {
 
     });

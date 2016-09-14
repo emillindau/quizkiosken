@@ -11,6 +11,11 @@
   <div class='container'>
     {{#if isActivePlayer}}
       {{#with current}}
+      {{#if isMusic}}
+        {{play}}
+      {{else}}
+        {{stop}}
+      {{/if}}
 
         <div class='container'>
           <div class='row'>

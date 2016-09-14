@@ -22,6 +22,8 @@ Meteor.publish('Questions.lobby', function(lobbyId) {
     clues_count: 1,
     correctAnswer: 1,
     visibleAnswer: 1,
+    isMusic: 1,
+    url: 1,
   }});
 });
 

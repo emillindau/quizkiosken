@@ -7,6 +7,7 @@ Template.home.onCreated(function() {
 });
 
 Template.home.onRendered(function() {
+  Session.set('onlyMusic', false);
 });
 
 Template.home.onDestroyed(function() {
@@ -22,17 +23,28 @@ Template.home.helpers({
   },
   quizzes: function() {
     return Quizzes.find({});
+  },
+  allowMusic: function() {
+    return Session.get('onlyMusic');
   }
 });
 
 Template.home.events({
+  'click #allow': (event) => {
+    Session.set('onlyMusic', !Session.get('onlyMusic'));
+  },
   'click .js-submit': (event) => {
     event.preventDefault();
     const noOfQuestions = $('#noq').val();
     const quizSource = $('#qs').val();
     const name = $('#inputName').val();
-
-    Meteor.call('createLobby', Meteor.userId(), name, noOfQuestions, quizSource, (err, res) => {
+    let allow = false;
+    if ($('#allow').is(":checked")) {
+      allow = true;
+    }
+    const onlyMusic = $('#onlyMusic').is(":checked");
+    console.log('onlyMusic', onlyMusic);
+    Meteor.call('createLobby', Meteor.userId(), name, noOfQuestions, quizSource, allow, onlyMusic, (err, res) => {
       console.log('lobby created', res);
       Router.go('/lobby/'+res);
     });

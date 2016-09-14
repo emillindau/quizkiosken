@@ -1,0 +1,26 @@
+<template name='lobbyUsers'>
+  <div class="container">
+    <div class='row margin-top'>
+      <p class='player-count'>#{{count}} players in lobby</p>
+    </div>
+
+    {{#each player in players}}
+      <div class="row margin-top">
+        <div class="col-lg-12">
+
+          <div class="media">
+            <a href="#" class="pull-left">
+              <img alt="64x64" class="media-object img-thumbnail" style="width: 64px; height: 64px;" src="{{player.avatar}}">
+            </a>
+            <div class="media-body">
+              <h3 class="media-heading player-name"><strong>{{player.username}}</strong></h3>
+              <p class="small">{{player.currentLobbyValue}} $</p>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    {{/each}}
+  </div>
+</template>

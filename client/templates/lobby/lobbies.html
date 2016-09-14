@@ -1,13 +1,23 @@
 <template name='lobbies'>
-  <div class='container'>
-    <div class='row'>
-      <div class='col-md-12'>
-        <ul>
-          {{#each lobby in lbs}}
-            <li><a href='/lobby/{{lobby._id}}'>{{lobby.name}}</a></li>
-          {{/each}}
-        </ul>
+  <div class="container">
+
+    {{#each lobby in lbs}}
+      <div class="row margin-top">
+        <div class="col-lg-12">
+
+          <div class="media">
+            <a href="#" class="pull-left">
+              <img alt="64x64" class="media-object img-thumbnail" style="width: 64px; height: 64px;" src="https://cdn3.iconfinder.com/data/icons/aviation-2/500/Aviation_start_sprint-512.png">
+            </a>
+            <div class="media-body">
+              <h3 class="media-heading player-name"><strong><a href='/lobby/{{lobby._id}}'>{{lobby.name}}</a></strong></h3>
+              <p class="small">JOIN</p>
+            </div>
+          </div>
+
+
+        </div>
       </div>
-    </div>
+    {{/each}}
   </div>
 </template>

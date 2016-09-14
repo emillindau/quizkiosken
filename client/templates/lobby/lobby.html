@@ -6,7 +6,7 @@
     {{#if currentUser}}
       <div class='container'>
         <div class='row'>
-            <div class='col-md-12'><h1>Välkommen till lobby</h1></div>
+            <div class='col-md-12'><h1 class='lobby-welcome'>Välkommen till lobby {{lobby.name}}</h1></div>
         </div>
         {{#if isAdmin}}
           <div class='row'>
@@ -27,8 +27,9 @@
           </div>
         {{/if}}
 
-        {{> users }}
+
       </div>
+      {{> lobbyUsers }}
     {{else}}
     <div class='container'>
       <div class='row'>
@@ -49,4 +50,3 @@
 </div>
 {{/if}}
 </template>
-

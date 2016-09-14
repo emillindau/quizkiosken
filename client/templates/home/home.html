@@ -20,10 +20,22 @@
             <div class="form-group">
                 <label for="qs">Quiz data source</label>
                 <select class="form-control" id="qs">
-                    <option value='jservice'>jService</option>
                     <option value='quiz'>Quiz-API</option>
+                    <option value='jservice'>jService</option>
                 </select>
             </div>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" id='allow'> Allow music questions
+              </label>
+            </div>
+            {{#if allowMusic}}
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" id='onlyMusic'> Only Music
+                </label>
+              </div>
+            {{/if}}
             <input class="btn btn-primary js-submit" type="submit" value="Start Lobby">
         </form>
         {{/if}}

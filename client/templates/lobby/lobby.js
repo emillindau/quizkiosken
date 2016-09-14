@@ -42,7 +42,9 @@ Template.lobby.onDestroyed(function() {
 
 Template.lobby.helpers({
   lobby: function() {
-      return Lobbies.findOne({_id: Router.current().params._id});
+    const lobby = Lobbies.findOne({_id: Router.current().params._id});
+    console.log('started lobby', lobby);
+    return lobby;
   },
   isAdmin: function() {
       const lobby = Lobbies.findOne({_id: Router.current().params._id});
