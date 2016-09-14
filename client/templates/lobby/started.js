@@ -34,8 +34,16 @@ Template.started.helpers({
     return lobby.clients && lobby.clients.includes(Meteor.userId());
   },
   current: function() {
-    console.log(Questions.findOne({lobbyId: Router.current().params._id}));
-    return Questions.findOne({lobbyId: Router.current().params._id});
+    const q = Questions.findOne({lobbyId: Router.current().params._id});
+    $('#answer').select();
+    if(!q.visibleAnswer) {
+      $('.hquestion').addClass('flash-white');
+      setTimeout(function() {
+        $('.hquestion').removeClass('flash-white');
+      }, 700);
+    }
+
+    return q;
   },
   correctAnswer: function() {
     const question = Questions.findOne({lobbyId: Router.current().params._id});
@@ -55,20 +63,18 @@ Template.started.helpers({
 Template.started.events({
   'submit #answerForm': function(event) {
     event.preventDefault();
-    console.log('submit');
     const answer = $('#answer').val().trim();
-    console.log('answer', answer);
     Meteor.call('checkAnswer', Meteor.userId(), Router.current().params._id, answer, (err, res) => {
       if(res) {
         if(res.data) {
-          console.log('correct ANSWER!!!');
+          console.log(':)');
           // $('body').css('background', '#2ECC40');
         } else {
           $('.answer-form').addClass('flash');
           setTimeout(function() {
             $('.answer-form').removeClass('flash');
           }, 700);
-          console.log('not correct answer :(');
+          console.log(':(');
           // $('body').css('background', '#FF4136');
         }
       }
